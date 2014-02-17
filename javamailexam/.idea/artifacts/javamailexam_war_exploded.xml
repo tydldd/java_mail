@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="javamailexam:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/javamailexam_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="javamailexam/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="javamailexam" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="javax.mail-1.5.1" />
+          <element id="library" level="project" name="junit-4.10" />
+          <element id="library" level="project" name="ant" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

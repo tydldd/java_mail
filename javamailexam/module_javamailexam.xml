@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_javamailexam" default="compile.module.javamailexam">
+  <dirname property="module.javamailexam.basedir" file="${ant.file.module_javamailexam}"/>
+  
+  <property name="module.jdk.home.javamailexam" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.javamailexam" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.javamailexam" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.javamailexam" value="${compiler.args}"/>
+  
+  <property name="javamailexam.output.dir" value="${module.javamailexam.basedir}/out/production/javamailexam"/>
+  <property name="javamailexam.testoutput.dir" value="${module.javamailexam.basedir}/out/test/javamailexam"/>
+  
+  <path id="javamailexam.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="javamailexam.module.production.classpath">
+    <path refid="${module.jdk.classpath.javamailexam}"/>
+    <path refid="library.javax.mail-1.5.1.classpath"/>
+    <path refid="library.tomcat_6.0.classpath"/>
+  </path>
+  
+  <path id="javamailexam.runtime.production.module.classpath">
+    <pathelement location="${javamailexam.output.dir}"/>
+    <path refid="library.javax.mail-1.5.1.classpath"/>
+  </path>
+  
+  <path id="javamailexam.module.classpath">
+    <path refid="${module.jdk.classpath.javamailexam}"/>
+    <pathelement location="${javamailexam.output.dir}"/>
+    <path refid="library.javax.mail-1.5.1.classpath"/>
+    <path refid="library.tomcat_6.0.classpath"/>
+  </path>
+  
+  <path id="javamailexam.runtime.module.classpath">
+    <pathelement location="${javamailexam.testoutput.dir}"/>
+    <pathelement location="${javamailexam.output.dir}"/>
+    <path refid="library.javax.mail-1.5.1.classpath"/>
+    <path refid="library.tomcat_6.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.javamailexam">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.javamailexam">
+    <patternset refid="excluded.from.module.javamailexam"/>
+  </patternset>
+  
+  <path id="javamailexam.module.sourcepath">
+    <dirset dir="${module.javamailexam.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.javamailexam" depends="compile.module.javamailexam.production,compile.module.javamailexam.tests" description="Compile module javamailexam"/>
+  
+  <target name="compile.module.javamailexam.production" depends="register.custom.compilers" description="Compile module javamailexam; production classes">
+    <mkdir dir="${javamailexam.output.dir}"/>
+    <javac2 destdir="${javamailexam.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.javamailexam}/javac">
+      <compilerarg line="${compiler.args.javamailexam}"/>
+      <bootclasspath refid="javamailexam.module.bootclasspath"/>
+      <classpath refid="javamailexam.module.production.classpath"/>
+      <src refid="javamailexam.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.javamailexam"/>
+    </javac2>
+    
+    <copy todir="${javamailexam.output.dir}">
+      <fileset dir="${module.javamailexam.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.javamailexam.tests" depends="register.custom.compilers,compile.module.javamailexam.production" description="compile module javamailexam; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.javamailexam" description="cleanup module">
+    <delete dir="${javamailexam.output.dir}"/>
+    <delete dir="${javamailexam.testoutput.dir}"/>
+  </target>
+</project>
